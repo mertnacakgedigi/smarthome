@@ -1,14 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Switch from '@material-ui/core/Switch';
-import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
+import { EmojiObjectsTwoTone as Bulb , HighlightOff as Delete} from '@material-ui/icons';
 
-export default class Light extends Component {
-    render() {
+export default function Light (props) {
+        console.log(props)
         return (
             <div>
-               <Switch/>
-               <EmojiObjectsIcon style={{ color: "yellow" }}/>
+               <Switch
+               checked={true}
+               />
+               <Bulb style={{ color: "yellow" }}/>
+               <Delete onClick = {()=> props.deleteLight(props.id)} style={{ color: "red" }}/>
             </div>
         )
-    }
+    
 }
