@@ -2,17 +2,23 @@ import React from 'react';
 
 import Lights from './containers/Lights'
 import Thermostat from './containers/Thermostat'
-import SpeechRecognition from './containers/SpeechRecognition'
+import Speech from './containers/SpeechRecognition'
 
 
-function App() {
-  return (
-    <div className="App">
-      <Lights/>
-      <Thermostat/>
-      <SpeechRecognition/>
-    </div>
-  );
+class App extends React.Component {
+
+  render () {
+
+    console.log("APP","hey")
+    return (
+      <div className="App">
+        <Lights/>
+        <Thermostat/>
+        <Speech/>
+      </div>
+    );
+  }
+
 }
 
 export default App;

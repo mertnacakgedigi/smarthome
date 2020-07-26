@@ -6,13 +6,15 @@ import HomeModel from '../models/api'
 export default class Lights extends Component {
     state = {
         lights : [],
-        test : false
+    
     }
 
 
     componentDidMount() {
+        console.log('I was triggered during componentDidMount')
         HomeModel.fetchHome()
             .then(res => {
+                console.log("I am setting lights")
                 this.setState({
                     lights : res.data.lights
                 })
@@ -54,7 +56,7 @@ export default class Lights extends Component {
        
         let toggledLightList = this.state.lights
 
-        console.log(toggledLightList[id].isOn)
+       
         toggledLightList[id].isOn = !toggledLightList[id].isOn
         HomeModel.toggleLight(id)
         .then(res => this.setState({
@@ -66,11 +68,11 @@ export default class Lights extends Component {
 
     render() {
         
-       
+        console.log('I was triggered during rendering')
         const lightList = this.state.lights.map((element,idx) => {
             return <Light testB= {this.state.test} test = {this.toggleTest} deleteLight ={this.deleteLight} id={idx} key={idx} checkOn={this.state.lights[idx] ? this.state.lights[idx].isOn : true} />
         })
-        console.log(this.state.lights)
+        
   
 
         return (

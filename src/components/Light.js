@@ -6,7 +6,7 @@ import HomeModel from '../models/api'
 
 
 export default function Light(props) {
-
+    console.log("Light","hey")
     return (
         <div>
             <Switch 
