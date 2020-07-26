@@ -11,8 +11,18 @@ export default class HomeModel {
         return request
     }
 
+    static deleteLastLigth() {
+        let request = axios.delete(`${REACT_APP_API_URL}/home/lights`)
+        return request
+    }
+
     static removeLight(data) {
         let request = axios.delete(`${REACT_APP_API_URL}/home/lights/${data}`)
+        return request
+    }
+
+    static toggleLight(data) {
+        let request = axios.put(`${REACT_APP_API_URL}/home/lights/toggle/${data}`)
         return request
     }
 }

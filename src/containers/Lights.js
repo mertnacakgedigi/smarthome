@@ -2,62 +2,83 @@ import React, { Component } from 'react'
 import Light from '../components/Light'
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 import HomeModel from '../models/api'
+
 export default class Lights extends Component {
     state = {
-        counter : null
+        lights : [],
+        test : false
     }
 
 
     componentDidMount() {
         HomeModel.fetchHome()
             .then(res => {
-                this.setState({counter : res.data.lights.length})
-            })
+                this.setState({
+                    lights : res.data.lights
+                })
+            })       
     }
-
 
     increment = () => {
-        // let counter = this.state.counter + 1;
-        // this.setState({
-        //     counter
-        // })
         HomeModel.addLight()
             .then(res => {
-                console.log(res)
                 this.setState({
-                    counter : res.data.lights.length
+                    lights: [...this.state.lights,{"isOn":true}]
                 })
-            })
-
-        
-        
+            })        
     }
+
     decrement = () => {
-        let counter = this.state.counter - 1;
-        this.setState({
-            counter
-        })
+        HomeModel.deleteLastLigth()
+            .then(res => {
+                let newList = this.state.lights
+                newList.pop()
+                this.setState({lights:newList})
+            })
     }
 
-    deleteLight = (data) => {
-        HomeModel.removeLight(data)
-            .then(res => console.log(res))
+    deleteLight = (id) => {
+        
+       let outputArray = [...this.state.lights]
+
+        outputArray.splice(id,1)
+        
+        HomeModel.removeLight(id)
+            .then(res => this.setState({
+                lights : outputArray
+            }))
+
     }
+
+    toggleTest = (id) => {
+       
+        let toggledLightList = this.state.lights
+
+        console.log(toggledLightList[id].isOn)
+        toggledLightList[id].isOn = !toggledLightList[id].isOn
+        HomeModel.toggleLight(id)
+        .then(res => this.setState({
+            lights : this.state.lights
+        }))
+    }
+
 
 
     render() {
+        
        
-        let lights = []
-        for (let i =0; i< this.state.counter;i++) {
-            lights.push(<Light deleteLight ={this.deleteLight} id={i}/>)
-        }
+        const lightList = this.state.lights.map((element,idx) => {
+            return <Light testB= {this.state.test} test = {this.toggleTest} deleteLight ={this.deleteLight} id={idx} key={idx} checkOn={this.state.lights[idx] ? this.state.lights[idx].isOn : true} />
+        })
+        console.log(this.state.lights)
+  
 
         return (
             <div>
                 <h1>Lights</h1>
                 <Add onClick={this.increment} />  
                 <Remove  onClick={this.decrement}/>
-                {lights}
+                {lightList}
 
             </div>
         )
