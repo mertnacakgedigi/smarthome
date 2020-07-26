@@ -25,4 +25,8 @@ export default class HomeModel {
         let request = axios.put(`${REACT_APP_API_URL}/home/lights/toggle/${data}`)
         return request
     }
+    static setTempature(data) {
+        let request = axios.put(`${REACT_APP_API_URL}/home/tempature`,data)
+        return request
+    }
 }

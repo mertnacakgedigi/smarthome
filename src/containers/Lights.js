@@ -40,9 +40,9 @@ export default class Lights extends Component {
     deleteLight = (id) => {
         
        let outputArray = [...this.state.lights]
+       outputArray.splice(id,1)
 
-        outputArray.splice(id,1)
-        
+      
         HomeModel.removeLight(id)
             .then(res => this.setState({
                 lights : outputArray
