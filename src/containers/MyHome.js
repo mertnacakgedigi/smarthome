@@ -1,25 +1,9 @@
-import React, { Component , PureComponent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Memoized as Light} from '../components/Light'
 import Thermostat from './Thermostat'
 import Speech from './SpeechRecognition'
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 import HomeModel from '../models/api'
-// or less ideally
-import { Container , Col , Row } from 'react-bootstrap';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//       flexGrow: 1,
-//     },
-//     paper: {
-//       padding: theme.spacing(2),
-//       textAlign: 'center',
-//       color: theme.palette.text.secondary,
-//     },
-// }));
 
 export default function MyHome () {
 
@@ -27,6 +11,7 @@ export default function MyHome () {
     const [value, setTempature] = useState(74)
 
     useEffect(() => {
+         console.log("MyHouse UseEffect Before")
         const getMyHome = async () => {
             const res = await HomeModel.fetchHome();
             const {lights , value} = res.data;
@@ -35,6 +20,7 @@ export default function MyHome () {
             setTempature(value);
         }
         getMyHome()
+        console.log("MyHouse UseEffect After")
     },[])
 
 
@@ -65,7 +51,7 @@ export default function MyHome () {
     function toggleLight (id) {
 
         const temp = [...lights]
-        temp[id].isOn = !temp[id].isOn
+        temp[id].isOn = false
         setLights(temp)
         HomeModel.toggleLight(id)
     }
@@ -86,15 +72,30 @@ export default function MyHome () {
         HomeModel.setTempature({value})
     };
 
+    function turnOffLightUsingSpeech (id) {
+        if(id ===-1) return
+        const temp = [...lights]
+        temp[id].isOn = false
+        setLights(temp)
+
+    }
+
+    function turnOnLightUsingSpeech (id) {
+        if(id ===-1) return
+        const temp = [...lights]
+        temp[id].isOn = true
+        setLights(temp)
+    }
+
     
     let lightList;
     if (lights) {
        
         lightList = lights.map((element,idx) => {
-            return <div className="light"><Light toggleLight = {toggleLight} deleteLight ={deleteLight} id={idx} key={idx} checkOn={lights[idx] ? lights[idx].isOn : true} /></div>
+            return <div key={idx} className="light"><Light toggleLight = {toggleLight} deleteLight ={deleteLight} id={idx}  checkOn={lights[idx] ? lights[idx].isOn : true} /></div>
         })
     };
-
+    console.log("MyHouse Rerender")
 
 
         return (
@@ -110,7 +111,7 @@ export default function MyHome () {
                     </div>
                   
                     <div className="col">           
-                      <Thermostat 
+                      <Thermostat key ="thermo"
                         valuetext = {valuetext}
                         handleSubmit = {handleSubmit} 
                         handleChange = {handleChange} 
@@ -125,7 +126,7 @@ export default function MyHome () {
                 </div>
                
                 <div>
-                        <Speech />
+                        <Speech key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
                 </div>
             </div>
         )
