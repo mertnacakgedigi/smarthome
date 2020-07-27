@@ -1,36 +1,72 @@
-import React, { Component } from 'react'
-import HomeModel from '../models/api'
-import { CircleSlider } from "react-circle-slider-temperature";
-
-export default class Tempature extends Component {
-    state = {
-        tempature : 0
-    }
-
-    componentDidMount(){    
-        HomeModel.fetchHome()
-            .then(res => this.setState({tempature:res.data.tempature}))
-    }
-    handleChange = (tempature ) => {
-        
-        this.setState({  tempature });
-       
-        
-    }
-
-    handleSubmit = (value) => {
-        HomeModel.setTempature(this.state)
-    }
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 
 
 
-    render() {
-        return (
-            <div >
-                 <CircleSlider min={50} max ={90} value={this.state.tempature} onChange={this.handleChange} onAnimationEnd={this.handleSubmit} />
-                 <p>{this.state.tempature}</p>
-                
-            </div>
-        )
-    }
+    
+
+export default function Thermostat(props) {
+  
+
+  const marks = [
+    {
+      value: 60,
+      label: '60°F',
+    },
+    {
+        value: 50,
+        label: '40°F',
+      },
+    {
+      value: 80,
+      label: '80°F',
+    },
+    {
+      value: 100,
+      label: '100°F',
+    },
+  ];
+
+  function valuetext(value) {
+    return `${value}°C`;
+  }
+  
+
+  
+
+  return (
+    <div>
+      <Typography id="non-linear-slider" gutterBottom>
+        Temperature range
+      </Typography>
+      <Slider
+        orientation="vertical"
+        value={props.value}
+        min={50}
+        step={1}
+        max={100}
+        onChangeCommitted= {props.handleSubmit}
+        getAriaValueText={props.valuetext}
+        marks = {marks}
+        onChange={props.handleChange}
+        valueLabelDisplay="auto"
+        aria-labelledby="vertical-slider"
+
+        style = {{height: 300}}
+      />
+
+    <Slider
+          disabled
+          orientation="vertical"
+          max={100}
+          step={1}
+          min={40}
+          defaultValue={80}
+          aria-labelledby="vertical-slider"
+          style = {{height: 300}}
+        />
+      <p>{props.value}</p>
+    </div>
+  );
 }

@@ -5,10 +5,11 @@ import Switch from '@material-ui/core/Switch';
 
 
 
-export default function SpeechRecognitiona() {
+export default function Speech(props) {
 
     const {transcript, resetTranscript } = useSpeechRecognition()
     const  [current , setChecked] = useState(true)
+    const [lights ,setLights] =useState(props.lights)
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return null
