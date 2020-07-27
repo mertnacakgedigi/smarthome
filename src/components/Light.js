@@ -5,7 +5,7 @@ import { EmojiObjectsTwoTone as Bulb , HighlightOff as Delete} from '@material-u
 
 
 
-export function Light({toggleLight, deleteLight , id , checkOn}) {
+function Light({toggleLight, deleteLight , id , checkOn}) {
     console.log("Light")
     return (
         <div>

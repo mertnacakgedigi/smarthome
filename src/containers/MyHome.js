@@ -1,109 +1,109 @@
-import React, { Component , PureComponent } from 'react'
-import {Memoized} from '../components/Light'
+import React, { Component , PureComponent, useEffect, useState } from 'react'
+import {Memoized as Light} from '../components/Light'
 import Thermostat from './Thermostat'
 import Speech from './SpeechRecognition'
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 import HomeModel from '../models/api'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
-export default class MyHome extends Component {
-   state = {
-       lights : [],
-       value : 0
-   }
-    
-   componentDidMount () {
-    this.getMyHome()
-   }
+// const useStyles = makeStyles((theme) => ({
+//     root: {
+//       flexGrow: 1,
+//     },
+//     paper: {
+//       padding: theme.spacing(2),
+//       textAlign: 'center',
+//       color: theme.palette.text.secondary,
+//     },
+// }));
+
+export default function MyHome () {
+
+    const [lights, setLights] = useState();
+    const [value, setTempature] = useState(74)
+
+    useEffect(() => {
+        const getMyHome = async () => {
+            const res = await HomeModel.fetchHome();
+            const {lights , value} = res.data;
+         
+            setLights(lights);
+            setTempature(value);
+        }
+        getMyHome()
+    },[])
 
 
-
-   getMyHome = async () => {
-    let res = await HomeModel.fetchHome();
-    let { lights , value} = res.data;
-   
-    this.setState({ lights , value : value });
-   };
-
-    
-    increment = () => {
+    function addLight ()  {
         HomeModel.addLight()
             .then(res => {
-                let addedLights = this.state.lights
-                addedLights.push({"isOn":true})
-                this.setState({
-                    lights: addedLights
-                })
+                setLights([...lights,{"isOn":true}])
             })        
     }
 
-    decrement = () => {
+
+    function removeLastLight () {
+
+        const temp = [...lights]
+        temp.pop()
+        setLights(temp)
         HomeModel.deleteLastLigth()
-            .then(res => {
-                let newList = this.state.lights
-                newList.pop()
-                this.setState({lights:newList})
-            })
     }
 
-    deleteLight = (id) => {
+    function deleteLight (id) {
         
-       let outputArray = this.state.lights
-       outputArray.splice(id,1)
-        HomeModel.removeLight(id)
-            .then(res => this.setState({
-                lights : outputArray
-            }))
-
+       const temp = [...lights];
+       temp.splice(id,1);
+       setLights(temp);
+       HomeModel.removeLight(id)
     }
 
-    toggleLight = (id) => {
-       
-        let toggledLightList = this.state.lights
-        toggledLightList[id].isOn = !toggledLightList[id].isOn
+    function toggleLight (id) {
+
+        const temp = [...lights]
+        temp[id].isOn = !temp[id].isOn
+        setLights(temp)
         HomeModel.toggleLight(id)
-        .then(res => this.setState({
-            lights : toggledLightList
-        }))
     }
 
-    valuetext = (value)  => {  
+    function valuetext (value) {  
        
         return `${value}°F`
-    
-      }
+    }
 
-    handleChange = (event, newValue) => {
+    function handleChange (event, newValue)  {
 
-        this.setState({ value : newValue })
-   
+        setTempature(newValue)
     };
 
 
-    handleSubmit = (event, value) => {
+    function handleSubmit (event, value) {
    
         HomeModel.setTempature({value})
+    };
 
+    
+    let lightList;
+    if (lights) {
+       
+        lightList = lights.map((element,idx) => {
+            return <Light toggleLight = {toggleLight} deleteLight ={deleteLight} id={idx} key={idx} checkOn={lights[idx] ? lights[idx].isOn : true} />
+        })
     };
 
 
-    render() {
 
- 
-       
-        
-        const lightList = this.state.lights.map((element,idx) => {
-            return <Memoized toggleLight = {this.toggleLight} deleteLight ={this.deleteLight} id={idx} key={idx} checkOn={this.state.lights[idx] ? this.state.lights[idx].isOn : true} />
-        })
-    
         return (
             <div>
                 <h1>Lights</h1>
-                <Add onClick={this.increment} />  
-                <Remove  onClick={this.decrement}/>
+                <Add onClick={addLight} />  
+                <Remove  onClick={removeLastLight}/>
                 {lightList}
-                <Thermostat valuetext = {this.valuetext} handleSubmit = {this.handleSubmit} handleChange = {this.handleChange} value = {this.state.value}/>
+                <Thermostat valuetext = {valuetext} handleSubmit = {handleSubmit} handleChange = {handleChange} value = {value}/>
                 <Speech />
             </div>
         )
-    }
+    
 }
