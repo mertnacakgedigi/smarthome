@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+}
+
+.col {
+    flex: 50%;
+    padding: 10px
+  }
+
+.container {
+    text-align: center;
+}
+
+.light-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.light {
+    width: 20%;
+    border: 2px solid black;
+}

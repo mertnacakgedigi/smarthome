@@ -37,9 +37,11 @@ export default function Thermostat(props) {
 
   return (
     <div>
-      <Typography id="non-linear-slider" gutterBottom>
-        Temperature range
-      </Typography>
+      <h1> 
+          Temperature range
+      </h1>
+       
+     
       <Slider
         orientation="vertical"
         value={props.value}

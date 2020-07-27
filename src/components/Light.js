@@ -8,13 +8,13 @@ import { EmojiObjectsTwoTone as Bulb , HighlightOff as Delete} from '@material-u
 function Light({toggleLight, deleteLight , id , checkOn}) {
     console.log("Light")
     return (
-        <div>
+        <div style ={{backgroundColor : checkOn ?  " white " :"black" }}>
             <Switch 
             checked={checkOn} 
             onChange ={() => toggleLight(id)}
             color="primary"
             />
-            <Bulb style={{ color: checkOn ?  "yellow" : "black ",fontSize :"60px"}} />
+            <Bulb style={{ color: checkOn ?  "yellow" : "white ",fontSize :"70px"}} />
             <Delete onClick = {()=> deleteLight(id)} style={{ color: "red" }}/>
         </div>
     )

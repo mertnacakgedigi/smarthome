@@ -4,6 +4,8 @@ import Thermostat from './Thermostat'
 import Speech from './SpeechRecognition'
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 import HomeModel from '../models/api'
+// or less ideally
+import { Container , Col , Row } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -89,20 +91,42 @@ export default function MyHome () {
     if (lights) {
        
         lightList = lights.map((element,idx) => {
-            return <Light toggleLight = {toggleLight} deleteLight ={deleteLight} id={idx} key={idx} checkOn={lights[idx] ? lights[idx].isOn : true} />
+            return <div className="light"><Light toggleLight = {toggleLight} deleteLight ={deleteLight} id={idx} key={idx} checkOn={lights[idx] ? lights[idx].isOn : true} /></div>
         })
     };
 
 
 
         return (
-            <div>
-                <h1>Lights</h1>
-                <Add onClick={addLight} />  
-                <Remove  onClick={removeLastLight}/>
-                {lightList}
-                <Thermostat valuetext = {valuetext} handleSubmit = {handleSubmit} handleChange = {handleChange} value = {value}/>
-                <Speech />
+            <div className="container"> 
+                <div className = "row">
+                     <div className="col">           
+                        <h1>Lights</h1>
+                        <Add onClick={addLight} />  
+                        <Remove  onClick={removeLastLight}/>
+                        <div className="light-container">
+                            {lightList}
+                        </div>
+                    </div>
+                  
+                    <div className="col">           
+                      <Thermostat 
+                        valuetext = {valuetext}
+                        handleSubmit = {handleSubmit} 
+                        handleChange = {handleChange} 
+                        value = {value}/>                      
+                    </div>
+
+
+
+
+
+
+                </div>
+               
+                <div>
+                        <Speech />
+                </div>
             </div>
         )
     
