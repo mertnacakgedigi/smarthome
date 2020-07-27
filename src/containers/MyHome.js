@@ -4,11 +4,14 @@ import Thermostat from './Thermostat'
 import Speech from './SpeechRecognition'
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 import HomeModel from '../models/api'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+
 
 export default function MyHome () {
 
     const [lights, setLights] = useState();
     const [value, setTempature] = useState(74)
+    const {transcript, resetTranscript } = useSpeechRecognition("")
 
     useEffect(() => {
          console.log("MyHouse UseEffect Before")
@@ -22,6 +25,12 @@ export default function MyHome () {
         getMyHome()
         console.log("MyHouse UseEffect After")
     },[])
+
+
+    useEffect(()=>{
+        console.log("useeffect")
+        sendIndex()
+    },[transcript])
 
 
     function addLight ()  {
@@ -48,13 +57,29 @@ export default function MyHome () {
        HomeModel.removeLight(id)
     }
 
+
     function toggleLight (id) {
+        
 
         const temp = [...lights]
+        // temp[id].isOn = !temp[id].isOn
         temp[id].isOn = false
         setLights(temp)
         HomeModel.toggleLight(id)
     }
+
+    function sendIndex()  {
+        const special = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+        let index = special.indexOf(transcript.split(" ")[3])
+        console.log(transcript)
+
+        if (index === -1) return
+
+        console.log(transcript)
+        console.log(index)
+        toggleLight(index)
+    }
+
 
     function valuetext (value) {  
        
@@ -126,7 +151,7 @@ export default function MyHome () {
                 </div>
                
                 <div>
-                        <Speech key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
+                        <Speech transcript ={transcript} sendIndex = {sendIndex}  key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
                 </div>
             </div>
         )
