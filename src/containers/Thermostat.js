@@ -36,7 +36,7 @@ export default function Thermostat(props) {
   
 
   return (
-    <div>
+    <>
       <h1> 
           Temperature range
       </h1>
@@ -49,7 +49,7 @@ export default function Thermostat(props) {
         step={1}
         max={100}
         onChangeCommitted= {props.handleSubmit}
-        getAriaValueText={props.valuetext}
+        getAriaValueText={valuetext}
         marks = {marks}
         onChange={props.handleChange}
         valueLabelDisplay="auto"
@@ -69,6 +69,6 @@ export default function Thermostat(props) {
           style = {{height: 300}}
         />
       <p>{props.value}</p>
-    </div>
+    </>
   );
 }
