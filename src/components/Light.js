@@ -8,10 +8,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 function Light({toggleLight, deleteLight , id , checkOn}) {
-  
     return (
-        <div className="box">
-            
+        <div className="box">     
             { checkOn ?
                  <img className="canoo"  src={loop} alt="loop"/> 
                  :

@@ -4,12 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 
 const useStyles = makeStyles({
-  root: {
-    color : 'white'
-  },
-  disabled : {
-    color : 'purple'
-  }
+    root: {
+      color : 'white'
+    },
+    disabled : {
+      color : 'purple'
+    }
 });
     
 
@@ -21,12 +21,11 @@ export default function Thermostat(props) {
 
 
   function updateThermostatColor () {
-    let stack = 50
-    
+    let stack = 50    
     let rgb = (props.value - stack)*5
     let currentColor = `rgb(${rgb},0,${250-rgb})`
     return currentColor
-  }
+}
 
   const marks = [
     {
@@ -100,9 +99,7 @@ export default function Thermostat(props) {
           style = {{height: 321}}
         />
         </div>
-  
-        <p className="tempature" >Thermostat:<span style={{color: `${updateThermostatColor()}` }}>{props.value}°F</span> Current Value:77°F</p>
-      
+        <p className="tempature" >Thermostat:<span style={{color: `${updateThermostatColor()}` }}>{props.value}°F</span> Current Value:77°F</p>    
     </div>
   );
 }

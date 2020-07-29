@@ -11,16 +11,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import canoo from "../style/canoo.png"
 
 export default function Logs(props) {
-    const [state, setState] = React.useState({bottom: false});
-
-   
-    
+  const [state, setState] = React.useState({bottom: false});
 
   const toggleDrawer = (open) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    setState({ bottom: open });
+  setState({ bottom: open });
   };
 
 
@@ -47,10 +44,8 @@ export default function Logs(props) {
               role="presentation"
               onClick={toggleDrawer( false)}
               onKeyDown={toggleDrawer(false)}>
-                   {logList}
-               </div>
-            
-         
+              {logList}
+            </div>
           </Drawer>
     </div>
   );

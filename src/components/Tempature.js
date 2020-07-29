@@ -11,32 +11,25 @@ export default class Tempature extends Component {
         return {value: props.tempature };
     }
 
-    handleSubmit = (event, value) => {
-        
+    handleSubmit = (event, value) => {  
         HomeModel.setTempature({value})
-
     }
 
     valuetext = (value)  => {  
-   
         return `${value}°C`
-
     }
 
     handleChange = (event, value) => {
         let newValue = this.state.value
-        newValue = value
-      
+        newValue = value 
         this.setState({ value : newValue })
-   
     };
 
 
     render() {
         const tempature = this.props.tempature
         console.log(tempature)
-        return (
-            
+        return (         
             <div >
                 <Slider
                 defaultValue={tempature}
