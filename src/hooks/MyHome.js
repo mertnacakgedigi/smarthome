@@ -6,6 +6,7 @@ import Logs from '../components/Logs'
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 import HomeModel from '../api/index'
 import LogModel from '../api/log'
+import LastLog from '../components/LastLog'
 
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
@@ -111,9 +112,6 @@ export default function MyHome () {
            
 
     };
-    useEffect(()=>{
-        showLastLog()
-    },[logs])
 
     function showLastLog() {
         setLastLog(true)
@@ -170,8 +168,8 @@ export default function MyHome () {
                         <Logs  logsAll ={logs} />  
                     </div>
                 </div>
-                <p className="lastLog" style ={{display : lastLog ? "block ": "none"}}>{logs ? logs[logs.length-1] : "" }</p>                   
-
+                
+                <LastLog  lastLog={lastLog} logs= {logs} showLastLog = {showLastLog} />
                 {/* <div className="wrapper">    <p className="sliding-background">Slide</p> </div> */}
             </div>
            
