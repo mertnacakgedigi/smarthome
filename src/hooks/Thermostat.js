@@ -1,34 +1,32 @@
 import React, { useEffect , useState , useRef} from 'react';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import { makeStyles } from '@material-ui/core/styles';
+import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 
-
-
+const useStyles = makeStyles({
+  root: {
+    color : 'white'
+  },
+  disabled : {
+    color : 'purple'
+  }
+});
     
 
 export default function Thermostat(props) {
   const [counterRed,setRed] = useState(0)
   const [counterBlue,setBlue] = useState(250)
-  const [currentRgb,setRgb] = useState(defaultRgb())
-  
-  const prevCountRef = useRef();
-  useEffect(() => {
-    prevCountRef.current = props.value;
-  });
-  const prevCount = prevCountRef.current;
-  // console.log(prevCount,props.value)
-  // var currentRgb;
-  // console.log(props.value)
+  const [currentRgb,setRgb] = useState(updateThermostatColor())
+  const {root,disabled} = useStyles();
 
-  function defaultRgb () {
+
+  function updateThermostatColor () {
     let stack = 50
     
     let rgb = (props.value - stack)*5
-    let defaultRgb = `rgb(${rgb},0,${250-rgb})`
-    return defaultRgb
+    let currentColor = `rgb(${rgb},0,${250-rgb})`
+    return currentColor
   }
-
-
 
   const marks = [
     {
@@ -58,27 +56,23 @@ export default function Thermostat(props) {
   ];
   const defaultMark = [{value: 77,label: '77°F',}]
 
-  // function thermoColor (){
-  //   if (props.value >=50 && props.value <60) return `rgb(3, 2, 252)`
-  //   if (props.value >=60 && props.value <70) return `rgb(42, 0, 213)`
-  //   if (props.value >=70 && props.value <80) return `rgb(99, 0, 158`
-  //   if (props.value >=80 && props.value <90) return `rgb(216, 0, 39)`
-  //   if (props.value >=90 && props.value <=100) return `rgb(254, 0, 2)`
-  // }
-
-  // let color = thermoColor()
 
   function valuetext(value) {
  
     return `${value}`;
   }
+
+
   return (
-    <div >
+    <div>
       <h1>Temperature</h1>
-       
-      <div  className="thermostat" style={{backgroundColor: `${defaultRgb()}` }}>
+      <Add/>
+      <Remove/>
+
+      <div  className="thermostat" style={{backgroundColor: `${updateThermostatColor()}` }}> 
+      
       <Slider
-       
+        className={root}
         orientation="vertical"
         value={props.value}
         min={50}
@@ -90,11 +84,11 @@ export default function Thermostat(props) {
         onChange={props.handleChange}
         valueLabelDisplay="auto"
         aria-labelledby="vertical-slider"
-        style = {{height: 280}}
+        style = {{height: 320}}
       />
-  
+    
     <Slider
-         
+         className={disabled}
           disabled
           orientation="vertical"
           max={100}
@@ -103,10 +97,11 @@ export default function Thermostat(props) {
           min={50}
           defaultValue={77}
           aria-labelledby="vertical-slider"
-          style = {{height: 280}}
+          style = {{height: 321}}
         />
-      </div>
-        <p className="tempature">{`Thermostat :${props.value}°F Current Value :77°F`}</p>
+        </div>
+  
+        <p className="tempature" >Thermostat:<span style={{color: `${updateThermostatColor()}` }}>{props.value}°F</span> Current Value:77°F</p>
       
     </div>
   );

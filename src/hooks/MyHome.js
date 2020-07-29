@@ -3,11 +3,11 @@ import {Memoized as Light} from '../components/Light'
 import Thermostat from './Thermostat'
 import Speech from './SpeechRecognition'
 import Logs from '../components/Logs'
-import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 import HomeModel from '../api/index'
 import LogModel from '../api/log'
 import LastLog from '../components/LastLog'
-
+import LightHeader from '../components/LightHeader'
+import CommandList from '../components/CommandList'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 
@@ -187,9 +187,7 @@ export default function MyHome () {
             <div className="container1"> 
                 <div className = "row">
                      <div className="left">           
-                        <h1>Lights</h1>
-                        <Add onClick={addLight} />  
-                        <Remove  onClick={removeLastLight}/>
+                        <LightHeader addLight={addLight} removeLastLight={removeLastLight}/>
                         <div className="light-container">
                             {lightList}
                         </div>
@@ -199,10 +197,14 @@ export default function MyHome () {
                       <Thermostat key ="thermo"
                         handleSubmit = {sendTempatureToServer} 
                         handleChange = {handleChangeforTempature} 
-                        value = {value}/> 
+                        value = {value}
+                        /> 
                         <Speech transcript ={transcript} transcriptCheck = {transcriptCheck}  key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
+                        <p> Your Text Command : <input value={input} onChange={onChange}></input> </p>
+                        <CommandList/>
                         <Logs  logsAll ={logs} />  
-                        <input value={input} onChange={onChange}></input>
+                          
+                    
                     </div>
                 </div>
                 

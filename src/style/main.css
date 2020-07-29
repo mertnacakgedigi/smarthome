@@ -1,57 +1,59 @@
 * {
     box-sizing: border-box;
     font-family: 'IBM Plex Mono', monospace;
- 
+    text-align: center;
 }
 
 
 .left {
-    flex: 60%;
+    flex: 40%;
     margin: 0 auto;
     height: 100%;
-    text-align: center;
+   
     
 }
 .right{
-    flex: 30%;
-    text-align: left;
-    /* margin-left: 2%; */
+    flex: 40%;
+    
     padding-left: 30px;
-}
 
-.container1 {
-    margin-left: 20px;
 }
 
 .light-container {
     width: 100%;
     text-align: left;
-    margin-left: 4.5%;
+    margin-left: 3.5%;
     
 }
 
 .light {
-    width: 250px;
-    height: 210px;
-    border: 2px solid white;
+    width: 33%; 
     display: inline-block;
     margin: auto;
-    text-align: center;
-    padding: 5px;
-    margin-bottom: 10px;
-
+    padding: 1%;
 }
-.canoo {
+
+p {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+div img {
     width: 80%;
     height: 75%;
-    overflow: hidden;
- 
 }
+
 .box{
     position: relative;
     background-color: black;
 }
 
+/* deletebutton */
 .delete {
     font-size: 25px;
     color :white;
@@ -60,11 +62,11 @@
     top: 8px;
     right: 16px;
     cursor: pointer;
-
 }
 
 p.tempature {
-    margin-top: 6px;
+    margin-top: 15px;
+    margin-bottom: 3px;
 }
 .slider {
     padding-right: 40px;
@@ -78,7 +80,7 @@ p.tempature {
 }
 
 .notification {
-    margin-top: 40px;
+    margin-top: 25px;
 }
 
 span.MuiSwitch-track {
@@ -89,10 +91,12 @@ div.MuiSvgIcon-root path {
     cursor: pointer;
 }
 
-div.MuiBadge-badge {
+.MuiBadge-badge {
     cursor: pointer;
     font-family: 'IBM Plex Mono', monospace !important;
     font-size: 0.9rem !important;
+    font-weight: bold !important;
+    z-index: 0 !important;
 }
 div.MuiListItem-root{
     width: 33%;
@@ -105,6 +109,10 @@ div.MuiListItem-root{
     color : rgb(245, 55, 55);
     text-align: left !important;
 }
+
+.makeStyles-root-8{
+    margin: 20px 0;
+}
 .log-list{
     background-color: black;
     height: 350px;
@@ -112,62 +120,77 @@ div.MuiListItem-root{
 }
 .MuiPaper-root{
     background-color: black !important;
+
 }
+
+.PrivateValueLabel-label-7{
+    color: purple !important;
+    font-size: 17px;
+}
+
 .thermostat{
-    width: 300px;
-    height: 300px;
+    width: 340px !important;;
+    height: 340px !important;;
     background: red;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
-    /* margin-left: 1%; */
-    padding-left: 23%;
+    margin: 0 auto;
+ 
+    padding-left: 5px
+    
 }
-
 .MuiSlider-root{
     margin-top: 10px;
-    margin-right: 10px;
-   
 }
+
+.MuiSlider-markLabel {
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+
+.MuiSlider-markLabelActive {
+    color : white !important;
+
+}
+
+.Mui-disabled{
+    margin-left: 12px;
+}
+
 .lastLog {
-    position: absolute;
+    position: sticky;
     bottom: 0;
     margin-bottom: 0;
     width: 100%;
     height: 3rem;
-    text-align: center;   
     background-color: rgb(17,17,17);
     color : rgb(245, 55, 55);  
     font-size: 20px;
     margin-top: 7px;
     justify-content: center;
     padding-top: 0.5rem;
-
-
 }
-/* .MuiSlider-rail:first-child {
-    margin-left: 5px;
-} */
-/* .MuiSlider-rail:first-child {
 
-} */
-/* .wrapper {
-    overflow: hidden;
-  }
-  
-  .sliding-background {
-    background: repeat-x;
 
-    height: 560px;
-    width: 5076px;
-    animation: slide 60s linear infinite;
-  }
-  
-  @keyframes slide{
-    0%{
-      transform: translate3d(0, 0, 0);
-    }
-    100%{
-      transform: translate3d(-1692px, 0, 0);
-    }
-  } */
+.MuiSvgIcon-root{
+    cursor: pointer;
+}
+button {
+    outline: none !important;;
+}
+
+/* Speech */
+.speech .icon {
+    font-size: 50px;
+    outline: none !important;
+}
+.MuiButtonBase-root {
+    padding: 0!important;;
+}
+
+@media only screen and (max-width: 1373px) {
+    /* body {
+      background-color: lightblue;
+    } */
+}

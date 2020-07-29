@@ -1,26 +1,21 @@
-import React, {useState, useEffect} from 'react'
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import React from 'react'
+import SpeechRecognition from 'react-speech-recognition'
 import StopIcon from '@material-ui/icons/Stop';
 import MicIcon from '@material-ui/icons/Mic';
-
+import IconButton from '@material-ui/core/IconButton'
 
 export default function Speech(props) {
-
-
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return null
     };
     
-
-
-
     return (
-        <div>
-        <MicIcon style={{fontSize:"40px"}} onClick={SpeechRecognition.startListening}/>
-        <StopIcon style={{fontSize:"40px"}} onClick={SpeechRecognition.stopListening}/>
-    
-        <p>{`Your Command: ${props.transcript}`}</p>
-      </div>
+        <div className="speech">
+          <IconButton><MicIcon className="icon" onClick={SpeechRecognition.startListening}/></IconButton> 
+          <IconButton><StopIcon className="icon" onClick={SpeechRecognition.stopListening}/></IconButton> 
+           
+            <p>Your Voice Command : {props.command ?  props.command : `Waiting for recording`}</p>  
+        </div>
     )
 }
