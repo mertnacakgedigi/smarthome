@@ -13,7 +13,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 export default function MyHome () {
 
     const [lights, setLights] = useState();
-    const [value, setTempature] = useState(74)
+    const [value, setTempature] = useState(82)
     const [logs,setLogs] =useState()
     const {transcript, resetTranscript } = useSpeechRecognition("")
  
@@ -44,7 +44,7 @@ export default function MyHome () {
 
     function addLight ()  {
         HomeModel.addLight()
-        setLights([...lights,{isOn:true}])
+        setLights([...lights,{isOn:false}])
         setLogs([...logs,"New light added"])
     }
 
@@ -89,7 +89,7 @@ export default function MyHome () {
     }
 
     function handleChange (event, newValue)  {
-
+        console.log(newValue)
         setTempature(newValue)
     };
 
@@ -127,7 +127,7 @@ export default function MyHome () {
 
 
         return (
-            <div className="container"> 
+            <div className="container1"> 
                 <div className = "row">
                      <div className="left">           
                         <h1>Lights</h1>
@@ -142,14 +142,13 @@ export default function MyHome () {
                       <Thermostat key ="thermo"
                         handleSubmit = {handleSubmit} 
                         handleChange = {handleChange} 
-                        value = {value}/>                      
+                        value = {value}/> 
+                        <Speech transcript ={transcript} sendIndex = {sendIndex}  key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
+                        <Logs  logsAll ={logs} />                     
                     </div>
                 </div>
                
-                <div className = "row">
-                        <Speech transcript ={transcript} sendIndex = {sendIndex}  key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
-                        <Logs logsAll ={logs} />
-                </div>
+                {/* <div className="wrapper">    <p className="sliding-background">Slide</p> </div> */}
             </div>
            
       

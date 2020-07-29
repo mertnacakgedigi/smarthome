@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import Switch from '@material-ui/core/Switch';
-
+import StopIcon from '@material-ui/icons/Stop';
+import MicIcon from '@material-ui/icons/Mic';
 
 
 export default function Speech(props) {
@@ -14,14 +14,13 @@ export default function Speech(props) {
     
 
 
-  
 
     return (
         <div>
-        <button onClick={SpeechRecognition.startListening}>Start</button>
-        <button onClick={SpeechRecognition.stopListening}>Stop</button>
+        <MicIcon style={{fontSize:"40px"}} onClick={SpeechRecognition.startListening}/>
+        <StopIcon style={{fontSize:"40px"}} onClick={SpeechRecognition.stopListening}/>
     
-        <p>{props.transcript}</p>
+        <p>{`Your Command: ${props.transcript}`}</p>
     
 
 

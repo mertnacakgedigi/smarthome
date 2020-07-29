@@ -20,32 +20,37 @@ export default function Logs(props) {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ bottom: open });
   };
+
+
   let logList;
 
-  console.log(props.logsAll)
+
   if(props.logsAll) {
     logList = props.logsAll.map((text,idx)=>{
-        return    <div
-     
-        role="presentation"
-        onClick={toggleDrawer( false)}
-        onKeyDown={toggleDrawer(false)}
-      > <ListItem  style ={{textAlign: "center" }} button key={idx}><ListItemText primary={`${idx+1}. ${text}`} /> </ListItem> </div>
+        return<ListItem  button key={idx}>
+               <ListItemText primary={`${idx+1}. ${text}`} /> 
+              </ListItem> 
     })
   }
   return (
     <div>
-          <Badge badgeContent={logList ?  logList.length : 0 } color="primary"><img onClick={toggleDrawer(true)} className="canoo" src={canoo} alt="canoo" /></Badge>
+          <div className="notification"><Badge onClick={toggleDrawer(true)} badgeContent={logList ?  logList.length : 0 } color="primary"><img onClick={toggleDrawer(true)} className="canoo icon" src={canoo} alt="canoo" /></Badge></div>
           <Drawer
             anchor={'bottom'}
             open={state['bottom']}
             onClose={toggleDrawer( false)}
-            style = {{height : "200px"}}
-          >
-            {logList}
+            style = {{height : "200px"}}>
+            <div
+              className="log-list"
+              role="presentation"
+              onClick={toggleDrawer( false)}
+              onKeyDown={toggleDrawer(false)}>
+                   {logList}
+               </div>
+            
+         
           </Drawer>
     </div>
   );

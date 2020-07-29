@@ -1,47 +1,158 @@
 * {
     box-sizing: border-box;
     font-family: 'IBM Plex Mono', monospace;
-    text-align: center;
+ 
 }
 
-.row {
-  display: flex;
-}
 
 .left {
-    flex: 70%;
+    flex: 60%;
+    margin: 0 auto;
+    height: 100%;
+    text-align: center;
     
 }
 .right{
     flex: 30%;
+    text-align: left;
+    /* margin-left: 2%; */
+    padding-left: 30px;
 }
 
-.container {
-    text-align: center;
+.container1 {
+    margin-left: 20px;
 }
 
 .light-container {
-    display: flex;
-    flex-wrap: wrap;
+    width: 100%;
+    text-align: left;
+    margin-left: 4.5%;
+    
 }
 
 .light {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 210px;
     border: 2px solid white;
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 10px;
+
 }
 .canoo {
-    width: 150px;
-    height: 150px;
-    border-color: white;
+    width: 80%;
+    height: 75%;
     overflow: hidden;
-    text-align : right
+ 
+}
+.box{
+    position: relative;
+    background-color: black;
 }
 
 .delete {
-    font-size:"30px";
-    color : white;
+    font-size: 25px;
+    color :white;
     font-weight: 700;
-   
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    cursor: pointer;
 
 }
+
+p.tempature {
+    margin-top: 6px;
+}
+.slider {
+    padding-right: 40px;
+    height: 300px;
+}
+
+.canoo.icon {
+    width: 150px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.notification {
+    margin-top: 40px;
+}
+
+span.MuiSwitch-track {
+    background-color: white;
+}
+
+div.MuiSvgIcon-root path {
+    cursor: pointer;
+}
+
+div.MuiBadge-badge {
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 0.9rem !important;
+}
+div.MuiListItem-root{
+    width: 33%;
+    display: inline-block;
+    cursor: default;
+    background-color: black;
+}
+.MuiTypography-body1 {
+    font-family: 'IBM Plex Mono', monospace !important;
+    color : rgb(245, 55, 200);
+    text-align: left !important;
+}
+.log-list{
+    background-color: black;
+    height: 350px;
+ 
+}
+.MuiPaper-root{
+    background-color: black !important;
+}
+.thermostat{
+    width: 300px;
+    height: 300px;
+    background: red;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    /* margin-left: 1%; */
+    padding-left: 23%;
+}
+
+.MuiSlider-root{
+    margin-top: 10px;
+    margin-right: 10px;
+   
+}
+
+/* .MuiSlider-rail:first-child {
+    margin-left: 5px;
+} */
+/* .MuiSlider-rail:first-child {
+
+} */
+/* .wrapper {
+    overflow: hidden;
+  }
+  
+  .sliding-background {
+    background: repeat-x;
+
+    height: 560px;
+    width: 5076px;
+    animation: slide 60s linear infinite;
+  }
+  
+  @keyframes slide{
+    0%{
+      transform: translate3d(0, 0, 0);
+    }
+    100%{
+      transform: translate3d(-1692px, 0, 0);
+    }
+  } */
