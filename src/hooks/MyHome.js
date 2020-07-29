@@ -4,8 +4,8 @@ import Thermostat from './Thermostat'
 import Speech from './SpeechRecognition'
 import Logs from '../components/Logs'
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
-import HomeModel from '../models/api'
-import LogModel from '../models/log'
+import HomeModel from '../api/index'
+import LogModel from '../api/log'
 
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
@@ -16,13 +16,16 @@ export default function MyHome () {
     const [value, setTempature] = useState(82)
     const [logs,setLogs] =useState()
     const {transcript, resetTranscript } = useSpeechRecognition("")
+    const [lastLog,setLastLog] =useState(false)
  
 
     useEffect(() => {   
         async function getMyHome () {
             try {                  
                 const res = await HomeModel.fetchHome(); 
+            
                 const {lights , value, logs} = res.data; 
+                
                 setLights(lights);
                 setTempature(value);
                 setLogs(logs)
@@ -43,23 +46,26 @@ export default function MyHome () {
 
 
     function addLight ()  {
+        
         HomeModel.addLight()
-        setLights([...lights,{isOn:false}])
-        setLogs([...logs,"New light added"])
+            .then(res => { 
+                setLogs([...logs,"New light added"])
+                setLights([...lights,{isOn:false}])
+            })
+            .catch(err => console.log(err))
     }
 
 
     function removeLastLight () {
-
         const temp = [...lights]
         temp.pop()
         setLights(temp)
         HomeModel.deleteLastLigth()
-        setLogs([...logs,"Last light deleted"])
+            .then(res =>  setLogs([...logs,"Last light deleted"]))
+            .catch(err => console.log(err))
     }
 
-    function deleteLight (id) {
-        
+    function deleteLight (id) {       
        const temp = [...lights];
        temp.splice(id,1);
        setLights(temp);
@@ -70,8 +76,6 @@ export default function MyHome () {
 
 
     function toggleLight (id) {
-        
-
         const temp = [...lights]
         temp[id].isOn = !temp[id].isOn
         setLights(temp)
@@ -81,6 +85,7 @@ export default function MyHome () {
         setLogs([...logs,`${suffix} light turned on`])
     }
 
+
     function sendIndex()  {
         const special = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
         let index = special.indexOf(transcript.split(" ")[3])
@@ -88,17 +93,33 @@ export default function MyHome () {
         toggleLight(index)
     }
 
-    function handleChange (event, newValue)  {
-        console.log(newValue)
+
+
+    // Thermostat
+    function handleChangeforTempature (event, newValue)  {
         setTempature(newValue)
     };
 
 
-    function handleSubmit (event, value) {
-   
+    function sendTempatureToServer (event, value) { 
         HomeModel.setTempature({value})
-    };
+            .then (res => {
+                console.log(res)
+                setLogs([...logs,`Set the thermostat to ${value}°F`])
+            })
+            .catch(err => console.log(err))
+           
 
+    };
+    useEffect(()=>{
+        showLastLog()
+    },[logs])
+
+    function showLastLog() {
+        setLastLog(true)
+        setInterval(() => {setLastLog(false)}, 4000);
+        
+    }
     function turnOffLightUsingSpeech (id) {
         if(id ===-1) return
         const temp = [...lights]
@@ -107,7 +128,9 @@ export default function MyHome () {
 
     }
 
+
     function turnOnLightUsingSpeech (id) {
+ 
         if(id ===-1) return
         const temp = [...lights]
         temp[id].isOn = true
@@ -140,14 +163,15 @@ export default function MyHome () {
                   
                     <div className="right">           
                       <Thermostat key ="thermo"
-                        handleSubmit = {handleSubmit} 
-                        handleChange = {handleChange} 
+                        handleSubmit = {sendTempatureToServer} 
+                        handleChange = {handleChangeforTempature} 
                         value = {value}/> 
                         <Speech transcript ={transcript} sendIndex = {sendIndex}  key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
-                        <Logs  logsAll ={logs} />                     
+                        <Logs  logsAll ={logs} />  
                     </div>
                 </div>
-               
+                <p className="lastLog" style ={{display : lastLog ? "block ": "none"}}>{logs ? logs[logs.length-1] : "" }</p>                   
+
                 {/* <div className="wrapper">    <p className="sliding-background">Slide</p> </div> */}
             </div>
            
