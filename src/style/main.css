@@ -185,9 +185,7 @@ button {
     font-size: 50px;
     outline: none !important;
 }
-.MuiButtonBase-root {
-    padding: 0!important;;
-}
+
 
 @media only screen and (max-width: 1373px) {
     /* body {
