@@ -17,6 +17,7 @@ export default function MyHome () {
     const [value, setTempature] = useState(82)
     const [logs,setLogs] =useState()
     const {transcript, resetTranscript } = useSpeechRecognition("")
+    const [input,setInput]=useState("")
     const [lastLog,setLastLog] =useState(false)
  
 
@@ -39,11 +40,57 @@ export default function MyHome () {
     
     },[])
 
+    // Transcript
+    useEffect(()=>{
+     
+        transcriptCheck(transcript)
+    },[transcript])
 
     useEffect(()=>{
      
-        sendIndex()
-    },[transcript])
+        transcriptCheck(input)
+    },[input])
+
+    function transcriptCheck(input)  {
+        if(input === "") return
+        console.log(input)
+        const special = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+        let index = special.indexOf(input.split(" ")[3])
+        let indexForDelete = special.indexOf(input.split(" ")[2])
+        let [first,second,third,fourth,fifth] = input.split(" ")
+        let twowords = `${first} ${second}`
+        let threewords = `${first} ${second} ${third}`
+        let fourwords = `${first} ${second} ${third} ${fourth}`
+        // console.log(lights[index].is,  checkWords ==="turn on")
+        if(fourwords ==="add a new light" || threewords === "add a light" ) addLight()
+        if(fourwords ==="delete the last light" || fourwords === "delete the last Light") removeLastLight()
+        console.log(fourth)
+        if(threewords ==="set the temperature" && fifth >= 50 && fifth <= 100 )  {sendTempatureToServer("",fifth); handleChangeforTempature("",fifth)}
+        
+        if (index === -1 && indexForDelete === -1) return 
+
+        if(first ==="delete") deleteLight(indexForDelete)
+        if(twowords ==="turn on" && lights[index].isOn === false ) toggleLight(index)
+        if(twowords ==="turn off" && lights[index].isOn === true ) toggleLight(index)
+
+        // console.log(checkWords)
+       
+   
+    }
+
+
+    function toggleLight (id) {
+        console.log("toggle")
+        const temp = [...lights]
+        temp[id].isOn = !temp[id].isOn
+        setLights(temp)
+        HomeModel.toggleLight(id)
+        let suffix = LogModel.ordinal_suffix_of(id+1)
+        if (!temp[id].isOn) return setLogs([...logs,`${suffix} light turned off`])
+        setLogs([...logs,`${suffix} light turned on`])
+    }
+
+
 
 
     function addLight ()  {
@@ -76,23 +123,8 @@ export default function MyHome () {
     }
 
 
-    function toggleLight (id) {
-        const temp = [...lights]
-        temp[id].isOn = !temp[id].isOn
-        setLights(temp)
-        HomeModel.toggleLight(id)
-        let suffix = LogModel.ordinal_suffix_of(id+1)
-        if (!temp[id].isOn) return setLogs([...logs,`${suffix} light turned off`])
-        setLogs([...logs,`${suffix} light turned on`])
-    }
 
 
-    function sendIndex()  {
-        const special = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
-        let index = special.indexOf(transcript.split(" ")[3])
-        if (index === -1) return    
-        toggleLight(index)
-    }
 
 
 
@@ -134,6 +166,10 @@ export default function MyHome () {
         temp[id].isOn = true
         setLights(temp)
     }
+    //delete before production
+    function onChange(event) {
+        setInput(event.target.value)
+    }
 
     
     let lightList;
@@ -144,7 +180,7 @@ export default function MyHome () {
         })
 
     };
-    console.log("MyHouse Rerender")
+    
 
 
         return (
@@ -164,8 +200,9 @@ export default function MyHome () {
                         handleSubmit = {sendTempatureToServer} 
                         handleChange = {handleChangeforTempature} 
                         value = {value}/> 
-                        <Speech transcript ={transcript} sendIndex = {sendIndex}  key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
+                        <Speech transcript ={transcript} transcriptCheck = {transcriptCheck}  key ="speech" toggleLight = {toggleLight} turnOn = {turnOnLightUsingSpeech}  turnOff = {turnOffLightUsingSpeech} />
                         <Logs  logsAll ={logs} />  
+                        <input value={input} onChange={onChange}></input>
                     </div>
                 </div>
                 

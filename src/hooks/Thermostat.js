@@ -27,7 +27,7 @@ export default function Thermostat(props) {
     let defaultRgb = `rgb(${rgb},0,${250-rgb})`
     return defaultRgb
   }
-  console.log(currentRgb)
+
 
 
   const marks = [

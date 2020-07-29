@@ -21,9 +21,6 @@ export default function Speech(props) {
         <StopIcon style={{fontSize:"40px"}} onClick={SpeechRecognition.stopListening}/>
     
         <p>{`Your Command: ${props.transcript}`}</p>
-    
-
-
       </div>
     )
 }
