@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.70e81d44.chunk.css",
-    "main.js": "/static/js/main.e0a1c84b.chunk.js",
-    "main.js.map": "/static/js/main.e0a1c84b.chunk.js.map",
+    "main.css": "/static/css/main.a6a0cb31.chunk.css",
+    "main.js": "/static/js/main.b448bce8.chunk.js",
+    "main.js.map": "/static/js/main.b448bce8.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.0f7d299b.js",
     "runtime-main.js.map": "/static/js/runtime-main.0f7d299b.js.map",
     "static/js/2.804347c3.chunk.js": "/static/js/2.804347c3.chunk.js",
     "static/js/2.804347c3.chunk.js.map": "/static/js/2.804347c3.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.f2737bf13d5bfb2d4226236ecaa99564.js": "/precache-manifest.f2737bf13d5bfb2d4226236ecaa99564.js",
+    "precache-manifest.450819d1a0e622f533335800db6da843.js": "/precache-manifest.450819d1a0e622f533335800db6da843.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.70e81d44.chunk.css.map": "/static/css/main.70e81d44.chunk.css.map",
+    "static/css/main.a6a0cb31.chunk.css.map": "/static/css/main.a6a0cb31.chunk.css.map",
     "static/js/2.804347c3.chunk.js.LICENSE.txt": "/static/js/2.804347c3.chunk.js.LICENSE.txt",
     "static/media/canoo.png": "/static/media/canoo.541da1bb.png",
     "static/media/canoodark.jpg": "/static/media/canoodark.15a18071.jpg",
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.0f7d299b.js",
     "static/js/2.804347c3.chunk.js",
-    "static/css/main.70e81d44.chunk.css",
-    "static/js/main.e0a1c84b.chunk.js"
+    "static/css/main.a6a0cb31.chunk.css",
+    "static/js/main.b448bce8.chunk.js"
   ]
 }
