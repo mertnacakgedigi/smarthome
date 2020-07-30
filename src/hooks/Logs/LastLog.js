@@ -1,21 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 
+import Snackbar from '@material-ui/core/Snackbar';
 
 
 export default function LastLog(props) {
     const [open, setOpen] = React.useState(false);
-
 
     useEffect(()=>{
         setOpen(true);
     },[props.logs])
 
    const handleClick = () => {
-    setOpen(true);
+    setOpen(false);
   };
 
   const handleClose = (event, reason) => {
@@ -38,6 +34,7 @@ export default function LastLog(props) {
         open={open}
         autoHideDuration={2000}
         onClose={handleClose}
+
     
       />
     </div>

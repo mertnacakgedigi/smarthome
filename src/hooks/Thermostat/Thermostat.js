@@ -95,8 +95,8 @@ return (
       </div>
       <p className="tempature" >
         Thermostat:
-        <span style={{color: `${updateThermostatColor()}` }}>{props.value}°F</span> 
-        Current Value:77°F
+        <span style={{color: `${updateThermostatColor()} ` }}>{props.value}°F </span> 
+         Current Value:77°F
       </p>    
   </div>
   );
