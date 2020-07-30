@@ -1,9 +1,8 @@
 import React from 'react'
 import Switch from '@material-ui/core/Switch';
-import { EmojiObjectsTwoTone as Bulb , HighlightOff as Delete} from '@material-ui/icons';
-import loop from "../style/loop.gif"
-import dark from "../style/canoodark.jpg"
-import DeleteIcon from '@material-ui/icons/Delete';
+import loop from '../../style/images/loop.gif'
+import dark from '../../style/images/canoodark.jpg'
+
 
 
 

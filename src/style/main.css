@@ -14,7 +14,7 @@
 }
 .right{
     flex: 40%;
-    
+    height: 100%;
     padding-left: 30px;
 
 }
@@ -158,26 +158,19 @@ div.MuiListItem-root{
     margin-left: 12px;
 }
 
-.lastLog {
-    position: sticky;
-    bottom: 0;
-    margin-bottom: 0;
-    width: 100%;
-    height: 3rem;
-    background-color: rgb(17,17,17);
-    color : rgb(245, 55, 55);  
-    font-size: 20px;
-    margin-top: 7px;
-    justify-content: center;
-    padding-top: 0.5rem;
+.MuiSnackbarContent-root{
+    background-color: rgb(17, 17, 17)!important;
+    display: inline !important;
+    color : rgb(245, 55, 55)!important;
+    font-size: 30px!important;
 }
-
 
 .MuiSvgIcon-root{
     cursor: pointer;
+    
 }
 button {
-    outline: none !important;;
+    outline: none !important;
 }
 
 /* Speech */
@@ -187,8 +180,8 @@ button {
 }
 
 
-@media only screen and (max-width: 1373px) {
-    /* body {
-      background-color: lightblue;
-    } */
+@media only screen and (max-width: 411px) {
+    .MuiSnackbarContent-root{
+        font-size: 20px!important;
+    }
 }

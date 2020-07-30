@@ -1,4 +1,4 @@
-import React, { useEffect , useState , useRef} from 'react';
+import React from 'react';
 import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
@@ -14,11 +14,8 @@ const useStyles = makeStyles({
     
 
 export default function Thermostat(props) {
-  const [counterRed,setRed] = useState(0)
-  const [counterBlue,setBlue] = useState(250)
-  const [currentRgb,setRgb] = useState(updateThermostatColor())
-  const {root,disabled} = useStyles();
 
+  const {root,disabled} = useStyles();
 
   function updateThermostatColor () {
     let stack = 50    
@@ -62,32 +59,29 @@ export default function Thermostat(props) {
   }
 
 
-  return (
-    <div>
+return (
+  <div>
       <h1>Temperature</h1>
       <Add/>
       <Remove/>
-
       <div  className="thermostat" style={{backgroundColor: `${updateThermostatColor()}` }}> 
-      
-      <Slider
-        className={root}
-        orientation="vertical"
-        value={props.value}
-        min={50}
-        step={1}
-        max={100}
-        onChangeCommitted= {props.handleSubmit}
-        getAriaValueText={valuetext}
-        marks = {marks}
-        onChange={props.handleChange}
-        valueLabelDisplay="auto"
-        aria-labelledby="vertical-slider"
-        style = {{height: 320}}
-      />
-    
-    <Slider
-         className={disabled}
+          <Slider
+          className={root}
+          orientation="vertical"
+          value={props.value}
+          min={50}
+          step={1}
+          max={100}
+          onChangeCommitted= {props.handleSubmit}
+          getAriaValueText={valuetext}
+          marks = {marks}
+          onChange={props.handleChange}
+          valueLabelDisplay="auto"
+          aria-labelledby="vertical-slider"
+          style = {{height: 320}}
+          />
+          <Slider
+          className={disabled}
           disabled
           orientation="vertical"
           max={100}
@@ -97,9 +91,13 @@ export default function Thermostat(props) {
           defaultValue={77}
           aria-labelledby="vertical-slider"
           style = {{height: 321}}
-        />
-        </div>
-        <p className="tempature" >Thermostat:<span style={{color: `${updateThermostatColor()}` }}>{props.value}°F</span> Current Value:77°F</p>    
-    </div>
+          />
+      </div>
+      <p className="tempature" >
+        Thermostat:
+        <span style={{color: `${updateThermostatColor()}` }}>{props.value}°F</span> 
+        Current Value:77°F
+      </p>    
+  </div>
   );
 }

@@ -1,92 +1,52 @@
 import React, { useEffect, useState } from 'react'
-import {Memoized as Light} from '../components/Light'
-import Thermostat from './Thermostat'
-import Speech from './SpeechRecognition'
-import Logs from '../components/Logs'
+import {Memoized as Light} from './Lights/Light'
+import Thermostat from './Thermostat/Thermostat'
+import Speech from './Command/SpeechRecognition'
+import CommandList from './Command/CommandList'
+import Logs from './Logs/Logs'
 import HomeModel from '../api/index'
-import LogModel from '../api/log'
-import LastLog from '../components/LastLog'
-import LightHeader from '../components/LightHeader'
-import CommandList from '../components/CommandList'
+import Input from '../util/Input'
+import LastLog from './Logs/LastLog'
+import LightHeader from './Lights/LightHeader'
 import { useSpeechRecognition } from 'react-speech-recognition'
 
 
-export default function MyHome () {
 
+export default function MyHome () {
     const [lights, setLights] = useState();
     const [value, setTempature] = useState(82)
     const [logs,setLogs] =useState()
-    const {transcript, resetTranscript } = useSpeechRecognition("")
+    const {transcript } = useSpeechRecognition("")
     const [input,setInput]=useState("")
     const [lastLog,setLastLog] =useState(false)
  
-
+    //Fetch Home
     useEffect(() => {   
-        async function getMyHome () {
-            try {                  
-                const res = await HomeModel.fetchHome(); 
-                const {lights , value, logs} = res.data; 
-                setLights(lights);
-                setTempature(value);
-                setLogs(logs)
-            }
-            catch(err){
-                console.log(err)
-            }
-        }
         getMyHome()
     },[])
 
-    // Transcript
-    useEffect(()=>{
-        transcriptCheck(transcript)
-    },[transcript])
-
-    useEffect(()=>{
-        transcriptCheck(input)
-    },[input])
-
-    function transcriptCheck(input)  {
-        if(input === "") return
-        const special = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
-        let index = special.indexOf(input.split(" ")[3])
-        let indexForDelete = special.indexOf(input.split(" ")[2])
-        let [first,second,third,fourth,fifth] = input.split(" ")
-        let twowords = `${first} ${second}`
-        let threewords = `${first} ${second} ${third}`
-        let fourwords = `${first} ${second} ${third} ${fourth}`
-
-        if(fourwords ==="add a new light" || threewords === "add a light" ) addLight()
-        if(fourwords ==="delete the last light" || fourwords === "delete the last Light" || fourwords === "remove the last Light" || fourwords === "remove the last light") removeLastLight()
-        if(threewords ==="set the temperature" && fifth >= 50 && fifth <= 100 )  {sendTempatureToServer("",fifth); handleChangeforTempature("",fifth)}
-        if (index === -1 && indexForDelete === -1) return 
-        if(first ==="delete") deleteLight(indexForDelete)
-        if(twowords ==="turn on" && lights[index].isOn === false ) toggleLight(index)
-        if(twowords ==="turn off" && lights[index].isOn === true ) toggleLight(index)
+    async function getMyHome () {
+        try {                  
+            const res = await HomeModel.fetchHome(); 
+            const {lights , value, logs} = res.data; 
+            setLights(lights);
+            setTempature(value);
+            setLogs(logs)
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
-    function toggleLight (id) {
-        HomeModel.toggleLight(id)
-            .then(res => {
-                const temp = [...lights]
-                temp[id].isOn = !temp[id].isOn
-                setLights(temp)
-                let suffix = LogModel.ordinal_suffix_of(id+1)
-                if (!temp[id].isOn) return setLogs([...logs,`${suffix} light turned off`])
-                setLogs([...logs,`${suffix} light turned on`])
-            })
-            .catch(err => console.log(err) )
-    }
-
+    //Ligth functions
     function addLight ()  { 
         HomeModel.addLight()
             .then(res => { 
-                setLogs([...logs,"New light added"])
+                setLogs([...logs,"A new light added"])
                 setLights([...lights,{isOn:false}])
             })
             .catch(err => console.log(err))
     }
-
 
     function removeLastLight () {
         HomeModel.deleteLastLigth()
@@ -105,10 +65,57 @@ export default function MyHome () {
                 const temp = [...lights];
                 temp.splice(id,1);
                 setLights(temp);
-                let suffix = LogModel.ordinal_suffix_of(id+1)
-                setLogs([...logs,`${suffix} light deleted`])
+                let suffix = Input.ordinal_suffix_of(id+1)
+                setLogs([...logs,`The ${suffix} light deleted`])
             })
             .catch(err => console.log(err))
+    }
+
+    function toggleLight (id) {
+        HomeModel.toggleLight(id)
+            .then(res => {
+                const temp = [...lights]
+                temp[id].isOn = !temp[id].isOn
+                setLights(temp)
+                let suffix = Input.ordinal_suffix_of(id+1)
+                if (!temp[id].isOn) return setLogs([...logs,`The ${suffix} light turned off`])
+                setLogs([...logs,`The ${suffix} light turned on`])
+            })
+            .catch(err => console.log(err) )
+    }
+
+
+    // Transcript
+    useEffect(()=>{
+        transcriptCheck(transcript)
+        // eslint-disable-next-line
+    },[transcript])
+
+    function transcriptCheck(value)  {
+        // If text command or voice command empty return
+        if(value === "" || value ===undefined) return
+        // Get words of commands and make digits for string values
+        let [first,fifth,twowords,threewords,fourwords,index,indexForDelete] = Input.split_of(value)
+
+        if(fourwords ==="add a new light" || threewords === "add a light" ) addLight()
+        if(fourwords ==="delete the last light" || fourwords === "remove the last light") removeLastLight()
+        if(threewords ==="set the temperature" && fifth >= 50 && fifth <= 100 )  {sendTempatureToServer("",fifth); handleChangeforTempature("",fifth)}
+
+        // If there is no digit from the input return
+        if (index === -1 && indexForDelete === -1) return 
+        if(first ==="delete" || first === "remove" ) deleteLight(indexForDelete)
+        if(twowords ==="turn on" && lights[index].isOn === false ) toggleLight(index)
+        if(twowords ==="turn off" && lights[index].isOn === true ) toggleLight(index)
+    }
+
+    //  Text Command
+    useEffect(()=>{
+        transcriptCheck(input)
+        // eslint-disable-next-line
+    },[input])
+
+    function onChange(event) {
+        setInput(event.target.value)
     }
 
     // Thermostat
@@ -125,54 +132,46 @@ export default function MyHome () {
             .catch(err => console.log(err))
     };
 
-    function showLastLog() {
-        setLastLog(true)
-        setInterval(() => {setLastLog(false)}, 4000);   
-    }
+    // display the last log
+    // function showLastLog() {
+    //     setLastLog(true)
+    //     setInterval(() => {setLastLog(false)}, 4000);   
+    // }
 
-    //delete before production
-    function onChange(event) {
-        setInput(event.target.value)
-    }
-
-    
     let lightList;
 
     if (lights) {
         lightList = lights.map((element,idx) => {
             return <div key={idx} className="light"><Light toggleLight = {toggleLight} deleteLight ={deleteLight} id={idx}  checkOn={lights[idx] ? lights[idx].isOn : true} /></div>
         })
-
-    };
-    
+    }; 
         return (
-            <div className="container1"> 
+            <div> 
                 <div className = "row">
                      <div className="left">           
                         <LightHeader addLight={addLight} removeLastLight={removeLastLight}/>
                         <div className="light-container">
                             {lightList}
                         </div>
-                    </div>
-                  
+                    </div>      
                     <div className="right">           
-                      <Thermostat key ="thermo"
-                        handleSubmit = {sendTempatureToServer} 
-                        handleChange = {handleChangeforTempature} 
-                        value = {value}
+                        <Thermostat key ="thermo"
+                            handleSubmit = {sendTempatureToServer} 
+                            handleChange = {handleChangeforTempature} 
+                            value = {value}
                         /> 
                         <Speech 
-                        transcript ={transcript} transcriptCheck = {transcriptCheck}  key ="speech" toggleLight = {toggleLight}/>
-                        <p> Your Text Command : <input value={input} onChange={onChange}></input> </p>
+                            transcript ={transcript} 
+                            transcriptCheck = {transcriptCheck}
+                            key ="speech" 
+                            toggleLight = {toggleLight}
+                        />
+                        <p> Your Text Command : <input value={input} onChange={onChange}></input></p>
                         <CommandList/>
                         <Logs  logsAll ={logs} />  
-                          
-                    
                     </div>
                 </div>
-                
-                <LastLog  lastLog={lastLog} logs= {logs} showLastLog = {showLastLog} />
-               
+                <LastLog   logs= {logs} />  
             </div>                   
         )   
 }
