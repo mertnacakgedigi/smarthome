@@ -1,11 +1,11 @@
 from flask import Flask, jsonify ,request ,render_template
-from flask_cors import CORS
+
 
 
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
-CORS(application)
+
 
 
 @application.route('/')
