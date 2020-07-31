@@ -1,12 +1,7 @@
 from flask import Flask, jsonify ,request ,render_template
 
 
-
-
-
 application = Flask(__name__)
-
-
 
 @application.route('/')
 def index():
@@ -70,10 +65,13 @@ def toggleLight(id):
 @application.route('/api/home/tempature',methods=['PUT'])
 def setTempature():
     myHome['value'] =  request.json['value']
-    myHome['logs'].append(f'Set the thermostat to {request.json['value']}°F')
+    myHome['logs'].append(f'Set the thermostat to {request.json["value"]}°F')
     return jsonify(myHome)
 
-if __name__ == "__main__":
+# 
+
+# run the app.
+if __name__ == "__main__':
 
     application.debug = True
     application.run()
