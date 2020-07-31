@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './style/main.css'
-import MyHome from './hooks/MyHome'
+import MyHome from './container/MyHome'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

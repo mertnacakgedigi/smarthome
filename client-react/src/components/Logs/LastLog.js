@@ -18,13 +18,11 @@ export default function LastLog(props) {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 
   return (
-    <div>
-      
+    <div>     
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -33,9 +31,7 @@ export default function LastLog(props) {
         message={props.logs ? props.logs[props.logs.length-1] : "" }
         open={open}
         autoHideDuration={2000}
-        onClose={handleClose}
-
-    
+        onClose={handleClose}  
       />
     </div>
   );

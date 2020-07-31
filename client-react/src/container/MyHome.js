@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import {Memoized as Light} from './Lights/Light'
-import Thermostat from './Thermostat/Thermostat'
-import Speech from './Command/SpeechRecognition'
-import CommandList from './Command/CommandList'
-import Logs from './Logs/Logs'
+import {Memoized as Light} from '../components/Lights/Light'
+import Thermostat from '../components/Thermostat/Thermostat'
+import Speech from '../components/Command/SpeechRecognition'
+import CommandList from '../components/Command/CommandList'
+import Logs from '../components/Logs/Logs'
 import HomeModel from '../api/index'
 import Input from '../util/Input'
-import LastLog from './Logs/LastLog'
-import LightHeader from './Lights/LightHeader'
+import LastLog from '../components/Logs/LastLog'
+import LightHeader from '../components/Lights/LightHeader'
 import { useSpeechRecognition } from 'react-speech-recognition'
 
 
@@ -18,7 +18,6 @@ export default function MyHome () {
     const [logs,setLogs] =useState()
     const {transcript } = useSpeechRecognition("")
     const [input,setInput]=useState("")
-    const [lastLog,setLastLog] =useState(false)
  
     //Fetch Home
     useEffect(() => {   
@@ -131,12 +130,6 @@ export default function MyHome () {
             })
             .catch(err => console.log(err))
     };
-
-    // display the last log
-    // function showLastLog() {
-    //     setLastLog(true)
-    //     setInterval(() => {setLastLog(false)}, 4000);   
-    // }
 
     let lightList;
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/core/styles';
-import { AddCircleOutlineTwoTone as Add , RemoveCircleOutlineTwoTone as Remove } from '@material-ui/icons';
 
 const useStyles = makeStyles({
     root: {
-      color : 'white'
+      color : 'white',
     },
     disabled : {
       color : 'purple'
@@ -14,7 +13,6 @@ const useStyles = makeStyles({
     
 
 export default function Thermostat(props) {
-
   const {root,disabled} = useStyles();
 
   function updateThermostatColor () {
@@ -54,7 +52,6 @@ export default function Thermostat(props) {
 
 
   function valuetext(value) {
- 
     return `${value}`;
   }
 
@@ -62,8 +59,6 @@ export default function Thermostat(props) {
 return (
   <div>
       <h1>Temperature</h1>
-      <Add/>
-      <Remove/>
       <div  className="thermostat" style={{backgroundColor: `${updateThermostatColor()}` }}> 
           <Slider
           className={root}
@@ -78,7 +73,7 @@ return (
           onChange={props.handleChange}
           valueLabelDisplay="auto"
           aria-labelledby="vertical-slider"
-          style = {{height: 320}}
+          style = {{height: 270}}
           />
           <Slider
           className={disabled}
@@ -90,7 +85,7 @@ return (
           min={50}
           defaultValue={77}
           aria-labelledby="vertical-slider"
-          style = {{height: 321}}
+          style = {{height: 270}}
           />
       </div>
       <p className="tempature" >
