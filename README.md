@@ -13,4 +13,4 @@ Technologies in play
 
 Video demo : https://youtu.be/I-g33rbmDiY
 
-Live demo : http://canoosmartv2-env.eba-zzkeu54x.us-east-2.elasticbeanstalk.com/
+Live demo(AWS ES2) : http://canoosmartv2-env.eba-zzkeu54x.us-east-2.elasticbeanstalk.com/
