@@ -1,12 +1,6 @@
 from flask import Flask, jsonify ,request ,render_template
 
-
-
-
-
 application = Flask(__name__)
-
-
 
 @application.route('/')
 def index():
@@ -17,7 +11,6 @@ myHome = {
     'value' : 79,
     'logs' : []
 }
-
 
 def ordinal_suffix_of(i):
     j = i % 10
@@ -67,15 +60,11 @@ def toggleLight(id):
     return jsonify(myHome)
 
 
-
-
 @application.route('/api/home/tempature',methods=['PUT'])
 def setTempature():
     myHome["value"] =  request.json["value"]
     myHome["logs"].append(f'Set the thermostat to {request.json["value"]}°F')
     return jsonify(myHome)
-
-
 
 
 if __name__ == "__main__":
