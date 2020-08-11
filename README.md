@@ -5,6 +5,7 @@ Users can set the temperature by dragging user friendly slider. The voice comman
 Technologies in play
 * React 
 * Flask
+* Speech Recognition
 * AWS
 * Material Ui
 * JavaScript
