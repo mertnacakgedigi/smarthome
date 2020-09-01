@@ -3,7 +3,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Badge from '@material-ui/core/Badge';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import canoo from "../../style/images/canoo.png"
+import home from "../../style/images/home.png"
 
 export default function Logs(props) {
   const [open, setState] = useState(false);
@@ -26,7 +26,7 @@ export default function Logs(props) {
   }
   return (
     <div>
-          <div className="notification"><Badge onClick={toggleDrawer(true)} badgeContent={logList ?  logList.length : 0 } color="primary"><img onClick={toggleDrawer(true)} className="canoo icon" src={canoo} alt="canoo" /></Badge></div>
+          <div className="notification"><Badge onClick={toggleDrawer(true)} badgeContent={logList ?  logList.length : 0 } color="primary"><img onClick={toggleDrawer(true)} className="home icon" src={home} alt="home" /></Badge></div>
           <Drawer
             anchor={'bottom'}
             open={open}
