@@ -12,6 +12,6 @@ Technologies in play
 * HTML
 * CSS
 
-Video demo : https://youtu.be/I-g33rbmDiY
+Video demo : https://www.youtube.com/watch?v=0EUkY1kYv6k
 
 Live demo(AWS ES2) : http://mysmarthome-env.eba-bppbg6sw.us-east-2.elasticbeanstalk.com/
