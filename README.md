@@ -14,4 +14,4 @@ Technologies in play
 
 Video demo : https://www.youtube.com/watch?v=0EUkY1kYv6k
 
-Live demo(AWS ES2) : http://mysmarthome-env.eba-bppbg6sw.us-east-2.elasticbeanstalk.com/
+Live demo(AWS ES2) : http://smarthomev2-env.eba-kbqnsphm.us-east-2.elasticbeanstalk.com/
